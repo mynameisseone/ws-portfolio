@@ -1,0 +1,98 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Gallery from '../../components/Gallery.astro';
+import { withBase } from '../../utils/url';
+import { shotsFor } from '../../utils/screens';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const shots = shotsFor(entry.id);
+const { title, customer, years, role, goal, stack, elements, links } = entry.data;
+---
+<BaseLayout title={title} description={entry.data.summary}>
+  <article>
+    <header class="project-head container">
+      <p><a href={withBase()}>← Все проекты</a></p>
+      <h1>{title}</h1>
+      <p class="customer">
+        {
+          customer.url ? (
+            <a href={customer.url} rel="noopener">{customer.name}</a>
+          ) : (
+            customer.name
+          )
+        }
+      </p>
+
+      <dl class="meta-list">
+        <dt>Годы</dt>
+        <dd>{years}</dd>
+        <dt>Участие</dt>
+        <dd>{role}</dd>
+        {
+          goal && (
+            <>
+              <dt>Цель</dt>
+              <dd>{goal}</dd>
+            </>
+          )
+        }
+      </dl>
+
+      {
+        stack.length > 0 && (
+          <ul class="badges" aria-label="Технологии">
+            {stack.map((item) => <li>{item}</li>)}
+          </ul>
+        )
+      }
+
+      {
+        links.length > 0 && (
+          <ul class="links">
+            {links.map((link) => (
+              <li>
+                <a href={link.url} rel="noopener">{link.label} ↗</a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <section class="section container">
+      <div class="prose">
+        <Content />
+      </div>
+
+      {
+        elements.length > 0 && (
+          <>
+            <h2 class="section-title">Элементы системы</h2>
+            <ul class="prose">
+              {elements.map((item) => <li>{item}</li>)}
+            </ul>
+          </>
+        )
+      }
+    </section>
+
+    {
+      shots.length > 0 && (
+        <section class="section container" id="screens">
+          <h2 class="section-title">Интерфейс</h2>
+          <Gallery shots={shots} />
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>
