@@ -7,6 +7,7 @@
   --fg-muted: #626b7a;
   --border: #e6e8ec;
   --accent: #2f5fe0;
+  --accent-fg: #ffffff;
 
   --maxw: 1080px;
   --prose: 68ch;
@@ -24,6 +25,7 @@
     --fg-muted: #9aa3b2;
     --border: #262b36;
     --accent: #7aa2ff;
+    --accent-fg: #0f1115;
   }
 }
 
@@ -111,4 +113,9 @@ p {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+.no-underline,
+.no-underline:hover {
+  text-decoration: none;
 }

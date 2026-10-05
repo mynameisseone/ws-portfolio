@@ -21,7 +21,7 @@ const { title, customer, years, role, goal, stack, elements, links } = entry.dat
 <BaseLayout title={title} description={entry.data.summary}>
   <article>
     <header class="project-head container">
-      <p><a href={withBase()}>← Все проекты</a></p>
+      <p><a href={withBase()} class="no-underline">← Все проекты</a></p>
       <h1>{title}</h1>
       <p class="customer">
         {
@@ -36,8 +36,6 @@ const { title, customer, years, role, goal, stack, elements, links } = entry.dat
       <dl class="meta-list">
         <dt>Годы</dt>
         <dd>{years}</dd>
-        <dt>Участие</dt>
-        <dd>{role}</dd>
         {
           goal && (
             <>
@@ -46,6 +44,8 @@ const { title, customer, years, role, goal, stack, elements, links } = entry.dat
             </>
           )
         }
+        <dt>Участие</dt>
+        <dd>{role}</dd>
       </dl>
 
       {
@@ -69,28 +69,32 @@ const { title, customer, years, role, goal, stack, elements, links } = entry.dat
       }
     </header>
 
-    <section class="section container">
-      <div class="prose">
-        <Content />
-      </div>
+    <section class="section">
+      <div class="container">
+        <div class="prose">
+          <Content />
+        </div>
 
-      {
-        elements.length > 0 && (
-          <>
-            <h2 class="section-title">Элементы системы</h2>
-            <ul class="prose">
-              {elements.map((item) => <li>{item}</li>)}
-            </ul>
-          </>
-        )
-      }
+        {
+          elements.length > 0 && (
+            <>
+              <h2 class="section-title">Элементы системы</h2>
+              <ul class="prose">
+                {elements.map((item) => <li>{item}</li>)}
+              </ul>
+            </>
+          )
+        }
+      </div>
     </section>
 
     {
       shots.length > 0 && (
-        <section class="section container" id="screens">
-          <h2 class="section-title">Интерфейс</h2>
-          <Gallery shots={shots} />
+        <section class="section" id="screens">
+          <div class="container">
+            <h2 class="section-title">Интерфейс</h2>
+            <Gallery shots={shots} />
+          </div>
         </section>
       )
     }

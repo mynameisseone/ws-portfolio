@@ -47,12 +47,58 @@
   color: var(--fg-muted);
   font-size: 1.075rem;
 }
+.hero-tech {
+  margin-top: 0.85rem;
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}
+.hero-tech-label {
+  color: var(--fg);
+  font-weight: 600;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 1.75rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--fg);
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+.btn:hover {
+  text-decoration: none;
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--accent) 88%, var(--fg));
+  border-color: color-mix(in srgb, var(--accent) 88%, var(--fg));
+  color: var(--accent-fg);
+}
 
 /* --- sections --- */
 .section {
   padding-block: clamp(2.5rem, 6vw, 5rem);
 }
-.section + .section {
+.section + .section,
+.hero + .section {
   border-top: 1px solid var(--border);
 }
 .section-title {
@@ -204,19 +250,3 @@ dialog.lightbox img {
   height: auto;
 }
 
-/* --- footer --- */
-.site-footer {
-  border-top: 1px solid var(--border);
-  padding-block: 2.5rem;
-  color: var(--fg-muted);
-  font-size: 0.95rem;
-}
-.site-footer a {
-  color: var(--fg-muted);
-}
-.site-footer .row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-between;
-}
