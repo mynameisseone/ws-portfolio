@@ -1,0 +1,14 @@
+---
+import { site } from '../data/site';
+import { withBase } from '../utils/url';
+---
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href={withBase()}>{site.title}</a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href={withBase('#about')}>Обо мне</a>
+      <a href={withBase('#projects')}>Проекты</a>
+      <a href={withBase('#approach')}>Подход</a>
+    </nav>
+  </div>
+</header>

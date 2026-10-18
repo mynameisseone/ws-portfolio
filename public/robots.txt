@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mynameisseone.github.io/ws-portfolio/sitemap-index.xml

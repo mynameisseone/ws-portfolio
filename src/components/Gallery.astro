@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import type { Shot } from '../utils/screens';
+
+interface Props {
+  shots: Shot[];
+}
+
+const { shots } = Astro.props;
+
+/**
+ * Широкие скриншоты занимают обе колонки, но только если стоят в начале ряда.
+ * Иначе в сетке осталась бы пустая ячейка — такой скриншот выводим в одну колонку.
+ */
+let column = 0;
+const items = shots.map((shot) => {
+  const landscape = shot.image.width / shot.image.height > 1.2;
+  const wide = landscape && column === 0;
+  column = wide ? 0 : (column + 1) % 2;
+  return { shot, wide };
+});
+---
+<div class="gallery">
+  {
+    items.map(({ shot, wide }) => (
+      <figure class={wide ? 'shot shot-wide' : 'shot'}>
+        <Image
+          src={shot.image}
+          alt={shot.alt}
+          widths={wide ? [800, 1400, 2000] : [400, 800, 1200]}
+          sizes={
+            wide
+              ? '(max-width: 1120px) 100vw, 1040px'
+              : '(max-width: 700px) 100vw, (max-width: 1120px) 50vw, 510px'
+          }
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>{shot.caption}</figcaption>
+      </figure>
+    ))
+  }
+</div>
+
+<dialog class="lightbox" id="lightbox" aria-label="Просмотр изображения">
+  <img alt="" />
+</dialog>
+
+<script>
+  const dialog = document.getElementById('lightbox');
+  if (dialog instanceof HTMLDialogElement) {
+    document.querySelectorAll<HTMLImageElement>('.shot img').forEach((img) => {
+      img.addEventListener('click', () => {
+        const target = dialog.querySelector('img');
+        if (target) {
+          target.src = img.currentSrc || img.src;
+          target.alt = img.alt;
+        }
+        dialog.showModal();
+      });
+    });
+    dialog.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      dialog.querySelector('img')?.removeAttribute('src');
+    });
+  }
+</script>
